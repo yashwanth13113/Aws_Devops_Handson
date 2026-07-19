@@ -1,0 +1,49 @@
+pipeline {
+
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                echo 'Source code downloaded from GitHub'
+            }
+        }
+
+        stage('System Information') {
+            steps {
+                sh 'bash shell-scripts/system-info.sh'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'bash shell-scripts/build.sh'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'bash shell-scripts/test.sh'
+            }
+        }
+
+    }
+
+    post {
+
+        success {
+            echo 'Pipeline Executed Successfully'
+        }
+
+        failure {
+            echo 'Pipeline Failed'
+        }
+
+        always {
+            echo 'Pipeline Finished'
+        }
+
+    }
+
+}
